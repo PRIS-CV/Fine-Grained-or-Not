@@ -22,7 +22,7 @@ Code release for Your “Labrador” is My “Dog”: Fine-Grained, or Not (CVPR
 - Extract them to `data/cars/`, `data/birds/` and `data/airs/`, respectively.
 - Split the dataset into train and test folder, the index of each class should follow the Birds.xls, Air.xls, and Cars.xls
 
-* [CUB-200-2011](http://www.vision.caltech.edu/visipedia/CUB-200-2011.html) (birds)
+* e.g., CUB-200-2011 dataset
 ```
   -/birds/train
 	         └─── 001.Black_footed_Albatross
@@ -34,31 +34,8 @@ Code release for Your “Labrador” is My “Dog”: Fine-Grained, or Not (CVPR
    -/birds/test	
              └─── ...         
 ```
-* [FGVC-Aircraft](http://www.robots.ox.ac.uk/~vgg/data/fgvc-aircraft/) (airs)
-```
-  -/air/train
-	         └─── 001.A300B4
-	         	       └─── 0056978.jpg
-	                   └─── ...
-	         └─── 002.A310
-	         └─── 003.A318
-	         └─── ...
-   -/air/test	
-             └─── ...   
-```
 
-* [Stanford-Cars](https://ai.stanford.edu/~jkrause/cars/car_dataset.html) (cars)
-```
-  -/cars/train
-	         └─── 001.AM General Hummer SUV 2000
-	         	       └─── 00163.jpg
-	                   └─── ...
-	         └─── 002.Acura RL Sedan 2012
-	         └─── 003.Acura TL Sedan 2012
-	         └─── ...
-   -/cars/test	
-             └─── ...   
-```
+
 
 
 ## Training
