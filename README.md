@@ -37,7 +37,6 @@ Code release for Your “Labrador” is My “Dog”: Fine-Grained, or Not (CVPR
 
 
 
-
 ## Training
 - `python Birds_ours_resnet.py` or `python Air_ours_resnet.py` or `python Cars_ours_resnet.py`
 
