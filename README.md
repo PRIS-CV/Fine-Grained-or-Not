@@ -1,5 +1,5 @@
 # Fine-Grained-or-Not
-Code release for Your “Labrador” is My “Dog”: Fine-Grained, or Not (CVPR 2021 Oral)
+Code release for Your “Flamingo” is My “Bird”: Fine-Grained, or Not (CVPR 2021 Oral)
 [DOI](https://arxiv.org/abs/2011.09040 "arxiv")
 
 
