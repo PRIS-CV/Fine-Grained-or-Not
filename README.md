@@ -47,7 +47,7 @@ Code release for Your “Flamingo” is My “Bird”: Fine-Grained, or Not (CVP
 If you find this paper useful in your research, please consider citing:
 ```
 @InProceedings{Chang2021Labrador,
-  title={Your “Labrador” is My “Dog”: Fine-Grained, or Not},
+  title={Your “Flamingo” is My “Bird”: Fine-Grained, or Not},
   author={Chang, Dongliang and Pang, Kaiyue and Zheng, Yixiao and Ma, Zhanyu and Song, Yi-Zhe and Guo, Jun},
   booktitle = {Computer Vision and Pattern Recognition},
   year={2021}
