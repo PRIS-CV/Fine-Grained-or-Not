@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Your "Flamingo" is My "Bird": Fine-Grained, or Not</title>
+    <link rel="stylesheet" href="w3.css">
+</head>
+
+<body>
+
+    <br />
+    <br />
+
+    <div class="w3-container">
+        <div class="w3-content" style="max-width:1080px">
+            <div class="w3-content w3-center" style="max-width:850px">
+                <h2 id="title"><b>Your "Flamingo" is My "Bird": Fine-Grained, or Not</b></h2>
+                <p>
+                    <a href="https://www.dongliangchang.cn//" target="_blank">Dongliang Chang</a><sup>1</sup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="https://kyp-sketchx.github.io/" target="_blank">Kaiyue Pang</a><sup>2</sup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a target="_blank">Yixiao Zheng</a><sup>1</sup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="http://www.pris.net.cn/introduction/teacher/zhanyu_ma" target="_blank">Zhanyu Ma</a><sup>1*</sup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="http://personal.ee.surrey.ac.uk/Personal/Y.Song/" target="_blank">Yi-Zhe Song</a><sup>2</sup>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="http://www.pris.net.cn/introduction/teacher/guojun" target="_blank">Jun Guo</a><sup>1</sup>
+                </p>
+                <p>
+                    <sup>1</sup>Beijing University of Posts and Telecommunications, CN
+                    &nbsp; &nbsp; &nbsp;
+                    <sup>2</sup>SketchX, CVSSP, University of Surrey, UK
+                </p>
+                <p><b>CVPR 2021</b></p>
+                <div class="w3-content w3-center" style="max-width:850px">
+                    <div style="max-width:850px; display:inline-block">
+                    <a href="https://arxiv.org/abs/2011.09040" target="_blank" style="color:#007bff">
+                            <img src="Flamingo.jpg" alt="front" style="width:50px"/>
+                            <div style="margin:10px 0"></div>
+                            <b>arXiv</b></a>
+<!--                     </div>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;
+                    <div style="max-width:850px; display:inline-block">
+                    <a href="https://drive.google.com/file/d/1Lh06RY0UxJDW5t3YWZsLqxyK-tLX3iKX/view?usp=sharing" target="_blank" style="color:#007bff">
+                            <img src="database.svg" alt="front" style="width:50px"/>
+                            <div style="margin:10px 0"></div>
+                            <b>Dataset</b></a> -->
+                    </div>
+                    &emsp;&emsp;&emsp;&emsp;&emsp;
+                    <div style="max-width:850px; display:inline-block">
+                    <a href="https://github.com/PRIS-CV/Fine-Grained-or-Not" target="_blank" style="color:#007bff">
+                            <img src="github.png" alt="front" style="width:65px"/>
+                            <div style="margin:10px 0"></div>
+                            <b>Code</b></a>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="w3-content w3-center" style="max-width:850px">
+                <img src="figure1.jpg" alt="front" style="width:450px"/>
+                <p>Figure 1. Definition of what is fine-grained is subjective. Your “flamingo” is my “bird”.</p>
+            </div>
+            <br>
+            <h3 class="w3-left-align" id="introduction"><b>Introduction</b></h3>
+            <p>
+Whether what you see in Figure 1 is a "flamingo" or a "bird", is the question we ask in this paper. While fine-grained visual classification (FGVC) strives to arrive at the former, for the majority of us non-experts just "bird" would probably suffice. The real question is therefore -- how can we tailor for different fine-grained definitions under divergent levels of expertise. For that, we re-envisage the traditional setting of FGVC, from single-label classification, to that of top-down traversal of a pre-defined coarse-to-fine label hierarchy -- so that our answer becomes "bird"-->"Phoenicopteriformes"-->"Phoenicopteridae"-->"flamingo". To approach this new problem, we first conduct a comprehensive human study where we confirm that most participants prefer multi-granularity labels, regardless whether they consider themselves experts. We then discover the key intuition that: coarse-level label prediction exacerbates fine-grained feature learning, yet fine-level feature betters the learning of coarse-level classifier. This discovery enables us to design a very simple albeit surprisingly effective solution to our new problem, where we (i) leverage level-specific classification heads to disentangle coarse-level features with fine-grained ones, and (ii) allow finer-grained features to participate in coarser-grained label predictions, which in turn helps with better disentanglement. Experiments show that our method achieves superior performance in the new FGVC setting, and performs better than state-of-the-art on traditional single-label FGVC problem as well. Thanks to its simplicity, our method can be easily implemented on top of any existing FGVC frameworks and is parameter-free.
+            </p>
+            <div class="w3-content w3-center" style="max-width:1000px">
+            <video style="width:840px; height:473px" controls="controls">
+                <source src="Flamingo-CVPR21.mp4" type="video/mp4" />
+            </video>
+            </div>
+            <h3 class="w3-left-align"><b>Human Study</b></h3>
+            <!-- <h4 class="w3-left-align"><b>Dataset Preview</b></h4> -->
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="human.jpg" alt="dataset" style="width:800px" />
+                <p class="w3-left-align">
+                    Figure 2. Human study on CUB-200-2011 bird dataset. Order, family, species are three coarse-to-fine label hierarchy for a bird image. A higher group id represents a group of people with better domain knowledge of birds, with group 5 interpreted as domain experts. (a) Human preference between single and multiple labels. (b) Impact of human familiarity with birds on single-label choice. (c) Impact of human familiarity with birds on multi-label choice.</p>
+            </div>
+
+<!--             <h4 class="w3-left-align"><b>Explore More PQA Pairs</b></h4>
+            <div class="w3-container">
+                <div class="w3-half">
+                    <div class="w3-container">
+                        <p>
+                            We provide visualization of more PQA pairs below. Simply select a task and an index to view.
+                        </p>
+                        <div class="w3-content w3-center w3-half">
+                        <b>Question</b>
+                        </div>
+                        <div class="w3-content w3-center w3-half">
+                        <b>Answer</b>
+                        </div>
+                        <p class="w3-center">
+                        <img id="showQuestion" src="PQA_pair/Closure Filling/1_Q.svg" style="width:230px; height:230px" alt="front" />
+                            &emsp;
+                        <img id="showAnswer" src="PQA_pair/Closure Filling/1_A.svg" style="width:230px; height:230px" alt="front" />
+                        <script>
+                            var t; var i;
+                            function change(v) {
+                                changeTask(); changeImg(v);
+                                var task = t; var image = i;
+                                document.getElementById("showQuestion").src = "PQA_pair/" + task.value + "/" + image + "_Q.svg";
+                                document.getElementById("showAnswer").src = "PQA_pair/" + task.value + "/" + image + "_A.svg";
+                            }
+                            function changeTask() {
+                                t = document.getElementById("task-selector");
+                            }
+                            function changeImg(v) {
+                                if(v>=1 && v<=10)
+                                    i = v;
+                            }
+                        </script>
+                        </p>
+                    </div>
+                </div> -->
+
+<!--                 <div class="w3-half">
+                    <div class="w3-container">
+                        <h4>Raw Data Format</h4> -->
+<!--                            There are 7 folder in the dataset root folder each represent one of 7 tasks. Each folder contain 20k-->
+<!--                            json files.-->
+<!--                            All file saved with <a href="https://github.com/fchollet/ARC" target="_blank">ARC</a> data format and can be visualized-->
+<!--                            by <a href="https://github.com/fchollet/ARC/tree/master/apps" target="_blank">ARC visualization tool</a>.-->
+<!--                         <div class="w3-code">
+                            All PQA pairs are stored in JSON file. Each JSON file contains a dictionary with two fields:
+
+                            <br>
+                            - "train": a list of exemplar Q/A pairs.
+
+                            <br>
+                            - "test": a list of test Q/A pairs.
+                            <br>
+                            <br>
+                            Each "pair" has two fields:
+                            <br>
+                            - "input": a question "grid".
+                            <br>
+                            - "output": an output "grid".
+                            <br>
+                            <br>
+                            Each "grid" (width w, height h) is composed of w*h color symbols. Each color symbol is one of 10 pre-defined colors.
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+<!--             <div class="w3-container">
+                <div class="w3-half">
+                    <form class="w3-container w3-center" action="" style="display:inline-block">
+                        <select id="task-selector" onchange="change(this.value)" name="Task" style="width:170px; height:36px" >
+                            <option selected value="Closure Filling">(a)Closure Filling</option>
+                            <option value="Continuity Connection">(b)Continuity Connection</option>
+                            <option value="Proximity Identification">(c)Proximity Identification</option>
+                            <option value="Shape Reconstruction">(d)Shape Reconstruction</option>
+                            <option value="Shape&Pattern Similarity">(e)Shape&Pattern Similarity</option>
+                            <option value="Reflection Symmetry">(f)Reflection Symmetry</option>
+                            <option value="Rotation Symmetry">(g)Rotation Symmetry</option>
+                        </select>
+                    </form>
+
+                    <div class="w3-bar w3-round" id="image-selector" style="height:36px; display:inline-block">
+                        <button class="w3-bar-item w3-hover-blue" value="1" onclick="change(this.value)">1</button >
+                        <button class="w3-bar-item w3-hover-blue" value="2" onclick="change(this.value)">2</button >
+                        <button class="w3-bar-item w3-hover-blue" value="3" onclick="change(this.value)">3</button >
+                        <button class="w3-bar-item w3-hover-blue" value="4" onclick="change(this.value)">4</button >
+                        <button class="w3-bar-item w3-hover-blue" value="5" onclick="change(this.value)">5</button >
+                        <button class="w3-bar-item w3-hover-blue" value="6" onclick="change(this.value)">6</button >
+                        <button class="w3-bar-item w3-hover-blue" value="7" onclick="change(this.value)">7</button >
+                        <button class="w3-bar-item w3-hover-blue" value="8" onclick="change(this.value)">8</button >
+                        <button class="w3-bar-item w3-hover-blue" value="9" onclick="change(this.value)">9</button >
+                        <button class="w3-bar-item w3-hover-blue" value="10" onclick="change(this.value)">10</button >
+                    </div>
+                </div>
+
+                <div class="w3-half">
+                    <div class="w3-container">
+                        <a href="template.json" target="_blank">
+                            <button class="w3-btn w3-white w3-border w3-border-blue w3-hover-blue w3-round-large">An Example of JSON file</button></a>
+                    </div>
+                </div>
+            </div> -->
+
+
+<!--            <h4 class="w3-left-align"><b>Statistic</b></h4>-->
+<!--            <div class="w3-cell-row">-->
+
+<!--                <div class="w3-container w3-cell w3-cell-middle">-->
+<!--                    <div class="w3-content w3-center">-->
+<!--                        <img src="statistic.svg" alt="statistic"  style="width:80%"/>-->
+<!--                        <p>-->
+<!--                            Figure 3.-->
+<!--                            (a) Distribution of key region loca-tions. -->
+<!--                            (b) Distribution of grid size.-->
+<!--                        </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--              -->
+<!--                <div class="w3-container w3-cell w3-cell-middle">-->
+<!--                    <div class="w3-content w3-center" style="width:120%" >-->
+<!--                        <table class="w3-table w3-bordered w3-border">-->
+<!--                            <tr>-->
+<!--                                <th>Tasks </th>-->
+<!--                                <th>T<sup>1</sup></th>-->
+<!--                                <th>T<sup>2</sup></th>-->
+<!--                                <th>T<sup>3</sup></th>-->
+<!--                                <th>T<sup>4</sup></th>-->
+<!--                                <th>T<sup>5</sup></th>-->
+<!--                                <th>T<sup>6</sup></th>-->
+<!--                                <th>T<sup>7</sup></th>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>Avg Symbols</td>-->
+<!--                                <td>2.0</td>-->
+<!--                                <td>2.0</td>-->
+<!--                                <td>5.0</td>-->
+<!--                                <td>2.0</td>-->
+<!--                                <td>5.0</td>-->
+<!--                                <td>3.0</td>-->
+<!--                                <td>5.0</td>-->
+<!--                            </tr>-->
+<!--                            <tr>-->
+<!--                                <td>Avg Slots (%)</td>-->
+<!--                                <td>12.9</td>-->
+<!--                                <td>3.6</td>-->
+<!--                                <td>4.0</td>-->
+<!--                                <td>7.6</td>-->
+<!--                                <td>15.3</td>-->
+<!--                                <td>9.8</td>-->
+<!--                                <td>12.5</td>-->
+<!--                            </tr>-->
+<!--                        </table>-->
+<!--                        <p> Table 1. Statistics of PQA dataset. </p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--              -->
+<!--            </div>-->
+
+<!--            <p>-->
+<!--                Statistical analysis is provided as shown in Figure 3 and Table 1 above where Avg Symbols indicate the-->
+<!--                number of symbols in a question-grid.-->
+<!--                The x and y coordinates in Figure 3 (a) are normalized to (0,1), corresponding to the center of key regions, -->
+<!--                x-axis and y-axis in Figure 3 (b) correspond to width and height of a grid.-->
+<!--                It basically shows the number of colors that are enough to represent a specified instance of a task.-->
+<!--                For instance, 2 colors in T1 are enough &#45;&#45; one for background and one for the boundary of closure-->
+<!--                region.-->
+<!--                Avg Slots represents the percentage of question-grid needed to be modified to form a correct answer.-->
+<!--            </p>-->
+
+            <h3 class="w3-left-align"><b> Cooperation or Confrontation? </b></h3>
+            <p>To explore the transfer effect in the joint learning of multi-granularity labels, we design an image classification task for predicting two labels at different granularities.</p>
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="figure3.jpg" alt="network" style="width:800px" />
+                <p>
+                    Figure 3.  Joint learning of two-granularity labels under different weighting strategy on CUB-200-2011 bird dataset. (a) x-axis: β value that controls the relative importance of a fine-grained classifier; y axis: performance of the coarse-grained classifier. (b) x-axis: α value that controls the relative importance of a coarse-grained classifier; y axis: performance of the fine-grained classifier.
+<!--                    The encoder takes test question embedding, positional encoding and context embedding as inputs,-->
+<!--                     where context embedding is given by a context encoder, providing clues about the implied law in an example PQA pair, and the positional encoding adapts to the 2D case. -->
+<!--                    The decoder can generate an answer-grid by predicting all symbols at every location in parallel.-->
+                </p>
+            </div>
+
+
+
+            <h3 class="w3-left-align"><b>Our Solution</b></h3>
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="ours.png" alt="network" style="width:800px" />
+                <p>
+                    Figure 4. A schematic illustration of our FGVC model with multi-granularity label output. BP: backpropagation.
+<!--                    The encoder takes test question embedding, positional encoding and context embedding as inputs,-->
+<!--                     where context embedding is given by a context encoder, providing clues about the implied law in an example PQA pair, and the positional encoding adapts to the 2D case. -->
+<!--                    The decoder can generate an answer-grid by predicting all symbols at every location in parallel.-->
+                </p>
+            </div>
+
+            <h3 class="w3-left-align"><b>Results</b></h3>
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="results.jpg" alt="network" style="width:900px" />
+                <p>
+                    Table 1. Comparisons with different baselines for FGVC task under multi-granularity label setting.
+<!--                    The encoder takes test question embedding, positional encoding and context embedding as inputs,-->
+<!--                     where context embedding is given by a context encoder, providing clues about the implied law in an example PQA pair, and the positional encoding adapts to the 2D case. -->
+<!--                    The decoder can generate an answer-grid by predicting all symbols at every location in parallel.-->
+                </p>
+            </div>
+
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="results2.jpg" alt="network" style="width:500px" />
+                <p>
+                    Table 2. Performance comparisons on traditional FGVC setting with single fine-grained label output.
+
+<!--                    The encoder takes test question embedding, positional encoding and context embedding as inputs,-->
+<!--                     where context embedding is given by a context encoder, providing clues about the implied law in an example PQA pair, and the positional encoding adapts to the 2D case. -->
+<!--                    The decoder can generate an answer-grid by predicting all symbols at every location in parallel.-->
+                </p>
+            </div>
+
+            <h3 class="w3-left-align"><b>Visualization</b></h3>
+            <div class="w3-content w3-center" style="max-width:1000px">
+                <img src="figure2.jpg" alt="network" style="width:800px" />
+                <p>
+                    Figure 5. We highlight the supporting visual regions for classifiers at different granularity of two compared models. Order, Family, Species represent three coarse-to-fine classifiers trained on CUB-200-2011 bird dataset.
+
+<!--                    The encoder takes test question embedding, positional encoding and context embedding as inputs,-->
+<!--                     where context embedding is given by a context encoder, providing clues about the implied law in an example PQA pair, and the positional encoding adapts to the 2D case. -->
+<!--                    The decoder can generate an answer-grid by predicting all symbols at every location in parallel.-->
+                </p>
+            </div>
+
+<!-- 
+            <p>To further evaluate the training efficiency of each model, we provide different amounts of data for training.
+                We can observe from Figure 4 that the scale of training data significantly affects model's performance.
+                Unlike our model, humans can learn the task-specific rule from very limited examples.
+                This clearly signifies just how unexplored this topic is, and in turn encourages future research to progress towards human-level intelligence.
+            </p>
+
+            <div class="w3-content w3-center" style="max-width:850px">
+                <img src="result.svg" alt="result" style="width:600px" />
+                <p> Figure 4. Testing results on varying training data volume. </p>
+            </div> -->
+
+
+
+<!--            <p>-->
+<!--                We observe our method which significantly outperforms other competitors over all tasks.-->
+<!--                On inspecting performances of every task further individually in Table2, we realize that T5 is most-->
+<!--                challenging as all baseline methods fail completely.-->
+<!--                On the contrary, it is interesting to note that humans can understand and address the questions in T5-->
+<!--                quite easily.-->
+<!--                Similar trend can be found on T6 and T7 as well. On tasks T1 to T4, all competitors perform better than-->
+<!--                they do on T5 to T7.-->
+<!--                Furthermore TD+H-CNN achieves result comparable to ours on T4.-->
+<!--                To further evaluate the training efficiency of each model, we provide different amounts of data for-->
+<!--                training.-->
+<!--                We can observe from Figure5 that the scale of training data significantly affects model's performance.-->
+<!--                Unlike our model, humans can learn the task-specific rule from very limited examples.-->
+<!--                Basically all methods would nearly fail if we reduce the amount of training data to 15% of PQA pairs per-->
+<!--                task.-->
+<!--                Compared to other baseline methods however, ours performs the best.-->
+<!--            </p>-->
+
+<!--            <h3 class="w3-left-align" id="publication"><b>Publication</b></h3>-->
+
+<!--            <h4 class="w3-left-align" id="github"><b>Code</b></h4>-->
+<!--            <a href="https://github.com/qugank/PQA/code" target="__blank">GitHub</a>-->
+<!--            |-->
+<!--            <a href="https://drive.google.com/file/d/1FW2SMdd68U2KpSxTG4QEYQfexVn1KjK2/view?usp=sharing"-->
+<!--                target="__blank">trained weight</a>-->
+
+<!--            <h4 class="w3-left-align" id="dataset"><b>Dataset</b></h4>-->
+<!--            <a href="https://drive.google.com/file/d/1GOIiqUuRy1SCXMDoDRPB_sxRuTmd8XYS/view?usp=sharing"-->
+<!--                target="__blank">download</a>-->
+
+<!--            <p>-->
+<!--                There are 7 folder in the dataset root folder each represent one of 7 tasks. Each folder contain 20k-->
+<!--                json files.-->
+<!--                All file saved with <a href="https://github.com/fchollet/ARC">ARC</a> data format and can be visualized-->
+<!--                by <a href="https://github.com/fchollet/ARC/tree/master/apps">ARC visualization tool</a>.-->
+<!--            </p>-->
+
+<!--            <div class="w3-code">-->
+<!--                Each JSON file contains a dictionary with two fields:-->
+<!--                <br>-->
+<!--                "train": demonstration input/output pairs. It is a list of "pairs" (typically 3 pairs).-->
+<!--                <br>-->
+<!--                "test": test input/output pairs. It is a list of "pairs" (typically 1 pair).-->
+<!--                <br>-->
+<!--                <br>-->
+<!--                A "pair" is a dictionary with two fields:-->
+<!--                <br>-->
+<!--                "input": the input "grid" for the pair.-->
+<!--                <br>-->
+<!--                "output": the output "grid" for the pair.-->
+<!--            </div>-->
+            <h4 class="w3-left-align" id="Bib"><b>Bibtex</b></h4>
+            
+            If this <a href="https://github.com/PRIS-CV/Fine-Grained-or-Not" target="__blank">work</a> is useful for you, please cite it:
+            <div class="w3-code">
+                @inproceedings{dongliang2021flamingo,<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;title={Your "Flamingo" is My "Bird": Fine-Grained, or Not},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;author={Dongliang Chang, Kaiyue Pang, Yixiao Zheng, Zhanyu Ma, Yi-Zhe Song, Jun Guo},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;booktitle={CVPR},<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;year={2021}<br>
+                }
+            </div>
+        </div>
+
+        <hr/>  
+        <div class="w3-content w3-center w3-opacity" style="max-width:850px"> <p style="font-size: xx-small;color: grey;">Proudly created by Dongliang Chang @ BUPT <br> 2021.6 </p> </div>
+
+    </div>
+
+</body>
+
+</html>
